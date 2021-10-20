@@ -1,5 +1,25 @@
 @extends('Layout_admin.Main')
 @section('content') 
+<div class="alert alert-danger" role="alert">
+  <strong>primary</strong>
+</div>
+@if (Session::has('error'))
+<div class="alert alert-danger" role="alert">
+  {{Session::get('error')}}
+</div>
+@endif
+@if(Session::has('succes'))
+<div class="alert alert-success" role="alert">
+  {{Session::get('succes')}}
+</div>
+@endif
+<form class="form-inline">
+  <div class="form-group">
+    <label for=""></label>
+    <input type="text" name="key" class="form-control" placeholder="Seach.....">
+    <input type="submit" class="form-control search">
+    </div>
+</form>
 <div class="table-agile-info">
   <div class="panel panel-default">
      <div class="panel-heading">
@@ -49,5 +69,11 @@
        </table>
      </div>
    </div>
+ </div>
+ <hr>
+ <div>
+   {{$data->appends(request()->all())->links()}}
+   {{--appends để giữ nguyên được các tham số khi thay đổi trang --}}
+   
  </div>
 @endsection

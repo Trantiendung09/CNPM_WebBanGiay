@@ -22,6 +22,10 @@ Route::get('/shop',[HomeController::class,'shop'])->name('home.shop');
 Route::prefix('admin')->group(function () {
     Route::get('/','AdminController@dashboard')->name('admin.dashboard');
     Route::get('/category','CategoryController@index')->name('category.index');
+    Route::get('/category/create','CategoryController@create')->name('category.create');
+    Route::post('/category/store','CategoryController@store')->name('category.store');
+
+
 
     Route::resources([
     'Product' =>  'ProductController' ,

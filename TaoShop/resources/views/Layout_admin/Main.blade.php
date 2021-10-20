@@ -14,7 +14,7 @@ $menu=config('menu');
 		<div class="brand">
 		
 			<a href="index.html" class="logo">
-				VISITORS
+				Táo Store
 			</a>
 			<div class="sidebar-toggle-box">
 				<div class="fa fa-bars"></div>

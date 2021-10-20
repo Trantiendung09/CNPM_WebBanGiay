@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -14,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data=Category::orderBy('id','DESC')->paginate(15);
+        $data=Category::orderBy('id','DESC')->Search()->paginate(2);
         return view('Layout_admin.category.index',compact('data'),[
             'titel'=>'trang loại sản phẩm'
         ]);
@@ -27,7 +29,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('Layout_admin.category.create',[
+            'titel'=>'trang thêm loại sản phẩm'
+        ]);
     }
 
     /**
@@ -38,7 +42,24 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $this->validate($request,[
+                'name'=>'required',
+                'logo' =>'required'
+            ]);
+           Category::create([
+            "name"=>(string) $request->input('name'),
+            "logo"=>(string) $request->input('logo')
+           ]);
+          }catch(\Exception $error){
+            Session::flash("error",$error->getMessage());
+            return back()->withErrors([
+                'error' => 'Vui lòng nhập đủ thông tin cần thiết.'
+            ]);
+        }
+    //    if(Product::create($request->all()))
+    //    {
+        return redirect()->route('category.index')->with('success','Thêm mới thành công');   
     }
 
     /**
