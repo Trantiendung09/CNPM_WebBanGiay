@@ -39,7 +39,7 @@
                    <td class="text-center">
                     {{-- <form method="POST" action="{{route('category.destroy',$item->id)}}">
                       @csrf @method('DELETE') --}}
-                      <a href="{{route('order.edit',$item->id)}}" class="btn btn-sm btn-primary btnedit" id="btnedit">
+                      <a href="{{route('order.show',$item->id)}}" class="btn btn-sm btn-primary btnedit" id="btnedit">
                         <i class="fa fa-edit text-edit text">chấp nhận</i>
                       </a>
                       <a href="{{route('order.destroy',$item->id)}}" class="btn btn-sm btn-danger btndelete" id="btndelete">
@@ -62,27 +62,27 @@
               <div class="panel-heading" id="modeltitel">Thông tin đơn hàng</div>
               <div>
                   <label for="">Tên khách hàng: </label>
-                  <span>Chu việt anh</span>
+                  <span id="name"></span>
               </div>
               <div>
                 <label for="">Địa chỉ: </label>
-                <span>Chu việt anh</span>
+                <span id="adress"></span>
             </div>
             <div>
                 <label for="">Số điện thoại: </label>
-                <span>Chu việt anh</span>
-            </div>
+                <span id="phone"></span>
+              </div>
             <div>
                 <label for="">Ngày đặt: </label>
-                <span>Chu việt anh</span>
+                <span id="create_date"></span>
             </div>
             <div>
                 <label for="">Sipper Date: </label>
-                <span>Chu việt anh</span>
+                <span id="shipper_date"></span>
             </div>
             <div>
                 <label for="">Ghi chú: </label>
-                <span>Chu việt anh</span>
+                <span id="note"></span>
             </div>
             <div>
                 <table class="table table-hover">
@@ -98,39 +98,8 @@
                         <th scope="col">Tổng</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
+                    <tbody id="tbody">
+                    
                     </tbody>
                   </table>
             </div>
@@ -160,6 +129,18 @@
      });
      $('#btnedit').click(function(even){
          even.preventDefault();
+         var url=$(this).attr('href');
+         $.ajax({
+                url:url,
+                type: 'GET',
+                success: function (response) {
+                   console.log(response);
+                   $('#tbody').html(response);
+                },
+                error: function () {
+                    alert("Chinh sua that bai");
+                }
+            });
        $('#modelProduct').modal();
      });   
   </script>

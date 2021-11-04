@@ -54,9 +54,26 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $result='';
+        $order=Order::find($id);
+        $orderdetail=OrderDetail::where('order_id',$order->id)->get();
+        foreach($orderdetail as $item){
+            if($item->discount!=null||$item->discount!=0){
+            $money=($item->quantity*$item->productname->price)*(1-$item->discount/100);
+            }else{
+                $money=($item->quantity*$item->productname->price);
+            }
+            $result='<tr>
+            <th scope="row">'.$item->productname->name.'</th>
+            <td>'.$item->productname->size.'</td>
+            <td>'.$item->productname->color.'</td>
+            <td>'.$item->quantity.'</td>'.$item->productname->price.'<td>'.$item->discount.'</td>
+            <td></td><td>'.$money.'</td>
+             </tr>';
+        }
+        return response()->json($result);
     }
 
     /**
@@ -71,11 +88,11 @@ class OrderController extends Controller
         // mã hóa đơn, tổng số tiền ,tên khách hàng, địa chỉ,sđt
         // từng hóa đơn
         // mặt hàng , size , màu ,giá ,giảmhđ,
-        $model=Order::find('id',$id)->first();
-        dd($model);
+        $model=Order::where($id,'id')->get();
         $orderdetail=OrderDetail::find('order_id',$id);
-        dd($orderdetail);
-        
+        dd($model);
+        return response()->json(['data'=>$orderdetail]);
+
     }
 
     /**

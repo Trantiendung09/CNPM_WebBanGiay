@@ -65,7 +65,8 @@ Route::post('/acount/store',[AcountController::class,'store'])->name('acount.sto
         Route::delete('/order/destroy/{id}','OrderController@destroy')->name('order.destroy');
         Route::get('/order/edit/{id}','OrderController@edit')->name('order.edit');
         Route::put('/order/update/{id}','OrderController@update')->name('order.update');
-    
+        Route::get('/order/show/{id}','OrderController@show')->name('order.show');
+
         Route::resources([
         'Product' =>  'ProductController' ,
         'Customer' => 'CustomerController',
