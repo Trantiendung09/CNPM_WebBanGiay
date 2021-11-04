@@ -1,18 +1,5 @@
 @extends('Layout_admin.Main')
 @section('content') 
-<div class="alert alert-danger" role="alert">
-  <strong>primary</strong>
-</div>
-@if (Session::has('error'))
-<div class="alert alert-danger" role="alert">
-  {{Session::get('error')}}
-</div>
-@endif
-@if(Session::has('succes'))
-<div class="alert alert-success" role="alert">
-  {{Session::get('succes')}}
-</div>
-@endif
 <form class="form-inline">
   <div class="form-group">
     <label for=""></label>
@@ -51,17 +38,19 @@
               <tr>
                   <td>{{$item['id']}}</td>
                   <td>{{$item['name']}}</td>
-                  <td>{{$item['logo']}}</td>
-                  <td>{{$item->created_at->format('m-d-Y')}}</td>
+                  <td>{{$item->logo?$item->logo:0}}</td>
+                  <td>{{$item->created_at?$item->created_at->format('m-d-Y'):'Sẽ cập nhật sớm thui mà...)):'}}</td>
                   <td>{{$item->products?$item->products->count():0}}</td>
                   <td class="text-right">
-                      <a href="" class="btn btn-sm btn-success">
-                      <i class="fas fa-edit"></i>
+                    {{-- <form method="POST" action="{{route('category.destroy',$item->id)}}">
+                      @csrf @method('DELETE') --}}
+                      <a href="{{route('category.edit',$item->id)}}" class="btn btn-sm btn-success">
+                        <i class="fa fa-edit text-edit text"></i>
                       </a>
-                      <a href="" class="btn btn-sm btn-danger">
-                        <i class="fas fa-trash"></i>
-                        </a>
-
+                      <a href="{{route('category.destroy',$item->id)}}" class="btn btn-sm btn-danger btndelete">
+                        <i class="fa fa-trash text"></i>
+                      </a>
+                    {{-- </form> --}}
                   </td>
               </tr>
           @endforeach
@@ -70,10 +59,25 @@
      </div>
    </div>
  </div>
+ <form method="POST" action="" id="form-delete">
+   @csrf @method('DELETE')
+ </form>
  <hr>
  <div>
    {{$data->appends(request()->all())->links()}}
    {{--appends để giữ nguyên được các tham số khi thay đổi trang --}}
    
  </div>
+@endsection
+@section('js')
+    <script>
+      $('.btndelete').click(function(even){
+        even.preventDefault(); // event.preventDefault() là ngăn không cho kết nối tới URL
+        var _href=$(this).attr('href');
+        $('form#form-delete').attr('action',_href);  // loaithe#id 
+        if(confirm('Bạn có muốn xóa mục đã chọn không?')){
+          $('form#form-delete').submit();
+        }
+       })
+    </script>
 @endsection

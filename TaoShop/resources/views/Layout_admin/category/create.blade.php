@@ -13,7 +13,7 @@
             </header>
             <div class="panel-body">
                 <div class="form">
-                    <form class="cmxform form-horizontal " id="commentForm" method="POST" action="{{route('category.store')}}">
+                    <form class="cmxform form-horizontal " id="commentForm" method="POST" action="{{route('category.store')}}" enctype="multipart/form-data">
                        @csrf
                         <div class="col-lg-9">
                             <div class="form-group ">
@@ -27,7 +27,7 @@
                         <div class="form-group ">
                             <label for="cemail" class="control-label col-lg-3">Logo</label>
                             <div class="col-lg-6">
-                                <input class="form-control " id="cemail" type="text" name="logo" required="">
+                                <input class="form-control " id="cemail" type="file" name="file_image" required="">
                             </div>
                         </div>
                         <div class="form-group">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -14,7 +15,16 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $model=Order::orderby('created_at','DESC')->paginate(5);
+        return view('Layout_admin.order.index',[
+            'titel'=>'Trang hóa đơn'
+        ],compact('model'));
+    }
+    public function wait(){
+        $model=Order::orderby('created_at','ASC')->where('status',0)->paginate(5);
+        return view('Layout_admin.order.orderwait',[
+            'titel'=>'Hóa đơn đang chờ xử lý'
+        ],compact('model'));
     }
 
     /**
@@ -55,9 +65,17 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($id)
     {
-        //
+        // tổng thể
+        // mã hóa đơn, tổng số tiền ,tên khách hàng, địa chỉ,sđt
+        // từng hóa đơn
+        // mặt hàng , size , màu ,giá ,giảmhđ,
+        $model=Order::find('id',$id)->first();
+        dd($model);
+        $orderdetail=OrderDetail::find('order_id',$id);
+        dd($orderdetail);
+        
     }
 
     /**

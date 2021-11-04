@@ -6,6 +6,9 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\Category\storeRequest;
+use App\Http\Requests\Category\updateRequest;
+
 
 class CategoryController extends Controller
 {
@@ -16,7 +19,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data=Category::orderBy('id','DESC')->Search()->paginate(2);
+        $data=Category::orderBy('id','DESC')->Search()->paginate(5);
         return view('Layout_admin.category.index',compact('data'),[
             'titel'=>'trang loại sản phẩm'
         ]);
@@ -40,13 +43,16 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(storeRequest $request)
     {
         try{
-            $this->validate($request,[
-                'name'=>'required',
-                'logo' =>'required'
-            ]);
+            if($request->has('file_image')){
+                $file=$request->file_image;
+                 $ext=$file->extension(); // lấy đuôi của ảnh 
+                 $file_name=time().'-logo.'.$ext;
+                $file->move(public_path('uploads',$file_name));
+            }
+            $request->merge(['logo'=>$file_name]);
            Category::create([
             "name"=>(string) $request->input('name'),
             "logo"=>(string) $request->input('logo')
@@ -79,9 +85,18 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category=Category::find($id);
+        if($category->count()>0){
+            return view('Layout_admin.category.edit',[
+                'titel'=>'Trang sửa thông tin'
+            ],compact('category')); 
+        }else
+        {
+            return redirect()->route('category.index')->with('error','không tìm thấy');
+        }
+        
     }
 
     /**
@@ -91,9 +106,12 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(updateRequest $request,$id)
     {
-        //
+        $category=Category::find($id);
+        $category->update($request->only('name','logo'));
+        return redirect()->route('category.index')->with('success','Cập nhật danh mục thành công');
+
     }
 
     /**
@@ -102,8 +120,15 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $category=Category::find($id);
+        if($category->products->count() > 0){
+              return redirect()->route('category.index')->with('error','Không thể xóa danh mục đã liên kết');
+        }
+        else{
+            $category->delete();
+            return redirect()->route('category.index')->with('success','Đã xóa danh mục');
+        }
     }
 }

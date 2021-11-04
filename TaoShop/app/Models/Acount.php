@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Acount extends Model
 {
     use HasFactory;
-    protected $table='acount';
+    protected $table='tbl_acount';
 
 }

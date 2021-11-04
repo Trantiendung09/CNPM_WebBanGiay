@@ -7,7 +7,7 @@
        ],
        [
            'label'=>'Product',
-           'url'=>'',
+           'url'=>'product.index',
            'icon'=>'fa-shopping-cart',
             'items'=>[
                 [
@@ -57,6 +57,33 @@
                  'url'=>'brand.create',
                  'icon'=>'fa-shopping-cart',
              ]
+         ]
+    ],
+    [
+        'label'=>'FileManger',
+        'url'=>'admin.file',
+        'icon'=>'fa-folder'
+    ],
+    [
+        'label'=>'Đơn hàng',
+         'url'=>'order.index',
+         'icon'=>'fa-bars',
+         'items'=>[
+             [
+                'label'=>'Đơn chờ xử lý',
+                'url'=>'order.wait',
+                'icon'=>'fa-wait'
+             ],
+             [
+                'label'=>'Đơn hoàn thành',
+                'url'=>'order.success',
+                'icon'=>'fa-success'
+             ],
+            [
+                'label'=>'Đơn hàng đang xử lý ',
+                'url'=>'order.doing',
+                'icon'=>'fa-load'
+            ],
          ]
     ]
    ]

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Acount\acountResquest;
 use App\Models\Acount;
+use App\Models\User;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 
 class AcountController extends Controller
@@ -24,7 +27,7 @@ class AcountController extends Controller
      */
     public function create()
     {
-        //
+        return view('layout.singin');
     }
 
     /**
@@ -33,9 +36,18 @@ class AcountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(acountResquest $request)
     {
-        //
+        User::create([
+            'email'=>(string)$request->input('email'),
+            'password'=>bcrypt($request->password),
+            'Acount_name'=>(string)$request->input('name'),
+            'Phone'=>(string)$request->input('phone'),
+            'Adress'=>(string)$request->input('adress'),
+            'Full_name'=>(string)$request->input('full_name'),
+            'Role'=>(int) 0
+        ]);
+        return redirect()->route('login');
     }
 
     /**

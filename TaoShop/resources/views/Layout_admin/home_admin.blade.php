@@ -19,7 +19,7 @@
          <thead>
            <tr>
              <th data-breakpoints="xs">ID</th>
-             <th>First Name</th>
+             <th>{{Session::get('acount_name')}}</th>
              <th>Last Name</th>
              <th data-breakpoints="xs">Job Title</th>
             

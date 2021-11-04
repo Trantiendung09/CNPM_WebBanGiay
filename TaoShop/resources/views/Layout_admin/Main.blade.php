@@ -210,13 +210,13 @@ $menu=config('menu');
 				<li class="dropdown">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 						<img alt="" src="images/2.png">
-						<span class="username">John Doe</span>
+						<span class="username">{{Session::get('acount_name')}}</span>
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu extended logout">
 						<li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
 						<li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-						<li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+						<li><a href="{{URL::to('/logout')}}"><i class="fa fa-key"></i>Log Out</a></li>
 					</ul>
 				</li>
 				<!-- user login dropdown end -->
@@ -234,17 +234,19 @@ $menu=config('menu');
 					<ul class="sidebar-menu" id="nav-accordion">
 						@foreach ($menu as $item)						
 						<li class="sub-menu">
-							<a href="{{route('admin.dashboard')}}">
+							<a href="{{route($item['url'])}}">
 								<i class="fa {{$item['icon']}}"></i>
 								<span>{{$item['label']}}</span>
 							</a>
+							@if(isset($item['items']))
 							<ul class="sub">
 								@if(isset($item['items']))
 									@foreach ($item['items'] as $miniitem)
-									<li><a href="">{{$miniitem['label']}}</a></li>
+									<li><a href="{{route($miniitem['url'])}}">{{$miniitem['label']}}</a></li>
 									@endforeach
 								@endif
 							</ul>
+							@endif
 						</li>		
 						@endforeach
 					</ul>   
@@ -256,6 +258,16 @@ $menu=config('menu');
 		<!--main content start-->
 		<section id="main-content">
 			<section class="wrapper">
+				@if (Session::has('error'))
+				<div class="alert alert-danger" role="alert">
+				{{Session::get('error')}}
+				</div>
+				@endif
+				@if(Session::has('success'))
+				<div class="alert alert-success" role="alert">
+				{{Session::get('success')}}
+				</div>
+				@endif
 			{{-- render --}}
 			@yield('content')
 		</section>
@@ -270,5 +282,6 @@ $menu=config('menu');
 		<script src="{{asset('public/backend/js/jquery.nicescroll.js')}}"></script>
 		<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
 		<script src="{{asset('public/backend/js/jquery.scrollTo.js')}}"></script>
+		@yield('js')
 </body>
 </html>

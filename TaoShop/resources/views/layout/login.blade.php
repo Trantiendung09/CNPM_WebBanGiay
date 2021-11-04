@@ -1,37 +1,71 @@
-@extends('welcome1')
+@extends('layout.layout_login')
 @section('content')
-<section id="form"><!--form-->
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-4 col-sm-offset-1">
-					<div class="login-form"><!--login form-->
-						<h2>Login to your account</h2>
-						<form action="#">
-							<input type="text" placeholder="Name">
-							<input type="email" placeholder="Email Address">
-							<span>
-								<input type="checkbox" class="checkbox"> 
-								Keep me signed in
-							</span>
-							<button type="submit" class="btn btn-default">Login</button>
-						</form>
-					</div><!--/login form-->
-				</div>
-				<div class="col-sm-1">
-					<h2 class="or">OR</h2>
-				</div>
-				<div class="col-sm-4">
-					<div class="signup-form"><!--sign up form-->
-						<h2>New User Signup!</h2>
-						<form action="#">
-							<input type="text" placeholder="Name">
-							<input type="email" placeholder="Email Address">
-							<input type="password" placeholder="Password">
-							<button type="submit" class="btn btn-default">Signup</button>
-						</form>
-					</div><!--/sign up form-->
-				</div>
-			</div>
+<form class="login100-form validate-form" action="{{route('store')}}" method="POST">
+	@if (Session::has('error'))
+	<div class="alert alert-danger" role="alert">
+	{{Session::get('error')}}
+	</div>
+	@endif
+	@if(Session::has('success'))
+	<div class="alert alert-success" role="alert">
+	{{Session::get('success')}}
+	</div>
+	@endif
+	@csrf
+	<span class="login100-form-title p-b-43">
+		Login to continue
+	</span>
+	
+	
+	<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+		<input class="input100" type="text" name="email">
+		<span class="focus-input100"></span>
+		<span class="label-input100">Email</span>
+	</div>
+	
+	
+	<div class="wrap-input100 validate-input" data-validate="Password is required">
+		<input class="input100" type="password" name="pass">
+		<span class="focus-input100"></span>
+		<span class="label-input100">Password</span>
+	</div>
+
+	<div class="flex-sb-m w-full p-t-3 p-b-32">
+		<div class="contact100-form-checkbox">
+			<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+			<label class="label-checkbox100" for="ckb1">
+				Remember me
+			</label>
 		</div>
-	</section>
-    @endsection
+
+		<div>
+			<a href="#" class="txt1">
+				Forgot Password?
+			</a>
+		</div>
+	</div>
+
+
+	<div class="container-login100-form-btn">
+		<button class="login100-form-btn" type="submit">
+			Login
+		</button>
+	</div>
+	
+	<div class="text-center p-t-46 p-b-20">
+		<span class="txt2">
+			or sign up using
+		</span>
+	</div>
+
+	<div class="login100-form-social flex-c-m">
+		<a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
+			<i class="fa fa-facebook-f" aria-hidden="true"></i>
+		</a>
+
+		<a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
+			<i class="fa fa-twitter" aria-hidden="true"></i>
+		</a>
+	</div>
+</form>
+@endsection

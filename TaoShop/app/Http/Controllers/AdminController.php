@@ -11,4 +11,9 @@ class AdminController extends Controller
          'titel'=>"Trang quản trị viên"
       ]);
    }
+   public function file(){
+      return view('Layout_admin.filemanager',[
+         'titel'=>'trang quản lý file'
+      ]);
+   }
 }
