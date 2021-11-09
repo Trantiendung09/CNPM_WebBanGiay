@@ -9,4 +9,7 @@ class Photo extends Model
 {
     use HasFactory;
     protected $table='photo';
+    public function products(){
+        return $this->hasone(Product::class,'photo_id','id');
+    } 
 }

@@ -42,7 +42,7 @@
                       <a href="{{route('order.show',$item->id)}}" class="btn btn-sm btn-primary btnedit" id="btnedit">
                         <i class="fa fa-edit text-edit text">chấp nhận</i>
                       </a>
-                      <a href="{{route('order.destroy',$item->id)}}" class="btn btn-sm btn-danger btndelete" id="btndelete">
+                      <a href="{{route('order.update',$item->id)}}" class="btn btn-sm btn-danger btndelete" id="btndelete">
                         <i class="fa fa-trash text">Hủy đơn</i>
                       </a>
                     {{-- </form> --}}
@@ -54,12 +54,13 @@
        </div>
      </div>
    </div>
-   
    <div class="modal" tabindex="-1" role="dialog" id="modelProduct">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
+          <form id="form-edit" method="GET" role="form">
+            @csrf @method('GET')
             <div class="panel panel-primary">
-              <div class="panel-heading" id="modeltitel">Thông tin đơn hàng</div>
+              <div class="panel-heading" id="modeltitel">Thông tin đơn hàng <span id="id"></span></div>
               <div>
                   <label for="">Tên khách hàng: </label>
                   <span id="name"></span>
@@ -74,7 +75,7 @@
               </div>
             <div>
                 <label for="">Ngày đặt: </label>
-                <span id="create_date"></span>
+                <span id="created_at"></span>
             </div>
             <div>
                 <label for="">Sipper Date: </label>
@@ -106,42 +107,70 @@
             </div>
             <div style="float: right">
                 <label for="">Thanh toán:</label>
-                <span>Total </span>
+                <span id="total"></span>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnsave">Accept</button>
+                <button type="submit" class="btn btn-primary" id="btnaccept">Accept</button>
                 <button type="button" class="btn btn-primary" id="btneditsave" style="">Accept&Emport</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnclose">Close</button>
             </div>
+          </form>
         </div>
     </div>
 </div>
+<hr>
 @endsection
 @section('js')
 <script>
-    $('.btndelete').click(function(even){
-      even.preventDefault(); // event.preventDefault() là ngăn không cho kết nối tới URL
-      var _href=$(this).attr('href');
-      $('form#form-delete').attr('action',_href);  // loaithe#id 
-      if(confirm('Bạn có muốn xóa mục đã chọn không?')){
-        $('form#form-delete').submit();
-      }
-     });
+  // $('#btnaccept').click(function (evern) {
+  //   even.preventDefault();
+  //   var url=$(this).attr('data-url');
+  //   alert(url);
+  // });
      $('#btnedit').click(function(even){
          even.preventDefault();
          var url=$(this).attr('href');
          $.ajax({
                 url:url,
                 type: 'GET',
+                datatype:'json',
                 success: function (response) {
                    console.log(response);
-                   $('#tbody').html(response);
-                },
+                   console.log(response.data);
+                   $('#tbody').html(response.data.result);
+                   $('#name').text(response.data.name);
+                   $('#adress').text(response.data.adress);
+                   $('#phone').text(response.data.phone);
+                   $('#created_at').text(response.data.created_at);
+                   $('#shipper_date').text('N/A');
+                   $('#total').text(response.data.total); 
+                   $('#id').text(response.data.id); 
+                  //thêm data-url chứa route sửa todo đã được chỉ định vào form sửa.
+                  $('#form-edit').attr('data-url','{{ asset('admin/order/update') }}/'+response.data.id) 
+                 },
                 error: function () {
                     alert("Chinh sua that bai");
                 }
             });
        $('#modelProduct').modal();
      });   
+     $('#form-edit').submit(function(e){
+					e.preventDefault();
+					var url=$(this).attr('data-url');
+          alert(url);
+					$.ajax({
+						type: 'get',
+						url:url,
+						success: function(response) {
+						
+							$('#modelProduct').modal('hide');
+              window.location.reload();
+						},
+						error: function (jqXHR, textStatus, errorThrown) {
+							alert('chuyển trạng thái hóa đơn bị lỗi');
+						}
+					})
+				})
+
   </script>
 @endsection

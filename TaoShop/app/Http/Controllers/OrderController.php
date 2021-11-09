@@ -26,6 +26,12 @@ class OrderController extends Controller
             'titel'=>'Hóa đơn đang chờ xử lý'
         ],compact('model'));
     }
+    public function ordersuccsess(){
+        $model=Order::orderby('created_at','ASC')->where('status',0)->paginate(5);
+        return view('Layout_admin.order.orderwait',[
+            'titel'=>'Hóa đơn đang chờ xử lý'
+        ],compact('model'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -66,14 +72,26 @@ class OrderController extends Controller
                 $money=($item->quantity*$item->productname->price);
             }
             $result='<tr>
-            <th scope="row">'.$item->productname->name.'</th>
+            <td>'.$item->productname->name.'</td>
             <td>'.$item->productname->size.'</td>
             <td>'.$item->productname->color.'</td>
-            <td>'.$item->quantity.'</td>'.$item->productname->price.'<td>'.$item->discount.'</td>
-            <td></td><td>'.$money.'</td>
-             </tr>';
+            <td>'.$item->quantity.'</td>
+            <td>'.$item->productname->price.'</td>
+            <td>'.$item->discount.'</td>
+            <td>bỏ trống</td>
+            <td>'.$money.'</td>
+            </tr>';
         }
-        return response()->json($result);
+        $obj=[
+            'name'=>$order->customername->fullname,
+            'total'=>$order->total,
+            'phone'=>$order->customername->phone,
+            'adress'=>$order->customername->adress,
+            'created_at'=>date('d-m-Y', strtotime($order->created_at)),
+            'id'=>$order->id,
+            'result'=>$result
+        ];
+                return response()->json(['data'=>$obj]);
     }
 
     /**
@@ -92,7 +110,6 @@ class OrderController extends Controller
         $orderdetail=OrderDetail::find('order_id',$id);
         dd($model);
         return response()->json(['data'=>$orderdetail]);
-
     }
 
     /**
@@ -102,9 +119,12 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update($id)
     {
-        //
+        $order=Order::find($id);
+        $order->status=1;
+        $order->save();
+        return response()->json(['message'=>'chuyển trạng thái thành công'],200);
     }
 
     /**
