@@ -26,6 +26,12 @@ class OrderController extends Controller
             'titel'=>'Hóa đơn đang chờ xử lý'
         ],compact('model'));
     }
+    public function ordersuccsess(){
+        $model=Order::orderby('created_at','ASC')->where('status',0)->paginate(5);
+        return view('Layout_admin.order.orderwait',[
+            'titel'=>'Hóa đơn đang chờ xử lý'
+        ],compact('model'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -54,9 +60,38 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $result='';
+        $order=Order::find($id);
+        $orderdetail=OrderDetail::where('order_id',$order->id)->get();
+        foreach($orderdetail as $item){
+            if($item->discount!=null||$item->discount!=0){
+            $money=($item->quantity*$item->productname->price)*(1-$item->discount/100);
+            }else{
+                $money=($item->quantity*$item->productname->price);
+            }
+            $result='<tr>
+            <td>'.$item->productname->name.'</td>
+            <td>'.$item->productname->size.'</td>
+            <td>'.$item->productname->color.'</td>
+            <td>'.$item->quantity.'</td>
+            <td>'.$item->productname->price.'</td>
+            <td>'.$item->discount.'</td>
+            <td>bỏ trống</td>
+            <td>'.$money.'</td>
+            </tr>';
+        }
+        $obj=[
+            'name'=>$order->customername->fullname,
+            'total'=>$order->total,
+            'phone'=>$order->customername->phone,
+            'adress'=>$order->customername->adress,
+            'created_at'=>date('d-m-Y', strtotime($order->created_at)),
+            'id'=>$order->id,
+            'result'=>$result
+        ];
+                return response()->json(['data'=>$obj]);
     }
 
     /**
@@ -71,11 +106,10 @@ class OrderController extends Controller
         // mã hóa đơn, tổng số tiền ,tên khách hàng, địa chỉ,sđt
         // từng hóa đơn
         // mặt hàng , size , màu ,giá ,giảmhđ,
-        $model=Order::find('id',$id)->first();
-        dd($model);
+        $model=Order::where($id,'id')->get();
         $orderdetail=OrderDetail::find('order_id',$id);
-        dd($orderdetail);
-        
+        dd($model);
+        return response()->json(['data'=>$orderdetail]);
     }
 
     /**
@@ -85,9 +119,12 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update($id)
     {
-        //
+        $order=Order::find($id);
+        $order->status=1;
+        $order->save();
+        return response()->json(['message'=>'chuyển trạng thái thành công'],200);
     }
 
     /**

@@ -3,7 +3,7 @@
 <div class="table-agile-info">
     <div class="panel panel-default">
        <div class="panel-heading">
-        Danh sách đơn hàng chưa giao
+        Danh sách đơn hàng giao thành công
        </div>
        <div>
          <table class="table" ui-jq="footable" ui-options='{
@@ -41,9 +41,6 @@
                       @csrf @method('DELETE') --}}
                       <a href="{{route('order.show',$item->id)}}" class="btn btn-sm btn-primary btnedit" id="btnedit">
                         <i class="fa fa-edit text-edit text">chấp nhận</i>
-                      </a>
-                      <a href="{{route('order.update',$item->id)}}" class="btn btn-sm btn-danger btndelete" id="btndelete">
-                        <i class="fa fa-trash text">Hủy đơn</i>
                       </a>
                     {{-- </form> --}}
                   </td>
@@ -154,23 +151,5 @@
             });
        $('#modelProduct').modal();
      });   
-     $('#form-edit').submit(function(e){
-					e.preventDefault();
-					var url=$(this).attr('data-url');
-          alert(url);
-					$.ajax({
-						type: 'get',
-						url:url,
-						success: function(response) {
-						
-							$('#modelProduct').modal('hide');
-              window.location.reload();
-						},
-						error: function (jqXHR, textStatus, errorThrown) {
-							alert('chuyển trạng thái hóa đơn bị lỗi');
-						}
-					})
-				})
-
   </script>
 @endsection
