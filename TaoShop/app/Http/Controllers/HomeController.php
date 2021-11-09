@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Photo;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -14,13 +15,15 @@ class HomeController extends Controller
         where('price','>','0')
         ->where('quantity','>','30')
         ->get();
-        return view('layout.home',compact('sp'));
+        $category=Category::all();
+        return view('layout.home',compact('sp','category'));
     }
     public function detail(Request $id)
     {
         $sps=Product::
         where('id',$id->id)->first();
-        return view('layout.product_detail',compact('sps'));
+        $category=Category::all();
+        return view('layout.product_detail',compact('sps','category'));
     }
 
 }

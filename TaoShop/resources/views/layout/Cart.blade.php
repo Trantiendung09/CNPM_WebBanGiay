@@ -1,12 +1,12 @@
 @extends('layout.test')
 @section('content')
 <section id="cart_items">
-    <div class="container2">
-        @include('layout.cart_product')
-    </div>
+    <div class="container1">
+     @include('layout.cart_product')
+    <div>
 </section>
 <section id="do_action">
-    <div class="container1">
+    <div class="container">
         <div class="heading">
             <h3>What would you like to do next?</h3>
             <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
@@ -44,7 +44,6 @@
         </div>
     </div>
 </section>
-<h1 class="test">ddddddddddddddddddddddddd</h1>
 <script src="{{asset('public/fontend/js/jquery.js')}}"></script>
 <script src="{{asset('public/fontend/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('public/fontend/js/jquery.scrollUp.min.js')}}"></script>
@@ -54,9 +53,11 @@
 <script>
     function updatecart(event) {
         event.preventDefault();
+        // alert( $(this).data('id'));
         let url = $('.cart_info').data('url');
         let id = $(this).data('id');
         let quantity = $(this).parents('tr').find('.cart_quantity_input').val();
+        $('.'+id).html($(this).parents('tr').find('.cart_quantity_input').val()*$(this).data('price'));
         $.ajax({
             type: "GET",
             url: url,
@@ -66,7 +67,8 @@
             },
             success: function(data) {
                 alert('cap nhap hanh cong')
-                $('.container2').html(data.cart_product);
+                //$carts=data.carts;
+                $('.container1').html(data.cart_product);
                 $('.total').html(data.total);
             },
             error: function() {}
@@ -111,10 +113,31 @@
 
         )
     }
+    function deletecart(event)
+    {
+        event.preventDefault();
+        let id = $(this).data('id');
+        let url = $('.cart_info').data('url2');
+        $('.xoa_'+id).html('')
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: {
+                id: id,
+            },
+            success: function(data) {
+                alert('cap nhap hanh cong')
+                //$carts=data.carts;
+                $('.container1').html(data.cart_product);
+                $('.total').html(data.total);
+            },
+            error: function() {}
+        })
+    }
     $(function() {
         $('a#cart_update').on('click', updatecart);
-        $('a#cart_quantity_delete').on('click', updatecart);
+        $(document).on('click', 'a#cart_delete', deletecart);
         $('.muahang').on('click', buy)
     })
 </script>
-@endsection
+@endsection 

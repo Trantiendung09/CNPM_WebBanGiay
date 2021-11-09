@@ -23,6 +23,7 @@ Route::get('/shop',[HomeController::class,'shop'])->name('home.shop');
 Route::get('/detail/{id}',[ProductController::class,'detail'])->name('home.detail');
 Route::get('/trangchu/showcart',[ProductController::class,'showcart'])->name('showcart');
 Route::get('/trangchu/updatecart',[ProductController::class,'updatecart'])->name('updatecart');
+Route::get('/trangchu/deletecart',[ProductController::class,'deletecart'])->name('deletecart');
 Route::get('/trangchu/thanhtoan',[ProductController::class,'thanhtoan'])->name('thanhtoan');
 
 Route::prefix('admin')->group(function () {

@@ -14,6 +14,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\product\storeRequest;
 use App\Models\Photo;
+use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
 {
@@ -59,14 +60,32 @@ class ProductController extends Controller
         $cart[$request->id]['quantity']=$request->quantity;
         session()->put('cart',$cart);
         $carts=session('cart');
-          $total=0;
+        $total=0;
+        foreach($carts as $sp)
+        {
+            $total+=$sp['quantity']*$sp['price'];
+        }
+        $view=view('layout.cart_product',compact('carts'));
+        return response()->json(['view'=>$view,'total'=>$total]);
+        }
+    }
+    public function deletecart(Request $request)
+    {
+        if($request->id)
+        {
+        $cart=session('cart');
+        unset($cart[$request->id]);
+        session()->put('cart',$cart);
+        $carts=session('cart');
+        $total=0;
         foreach($carts as $sp)
         {
             $total+=$sp['quantity']*$sp['price'];
         }
         $view=view('layout.cart_product',compact('carts'))->render();
-        return response()->json(['cart_product'=>$view,'total'=>$total]);
+        return response()->json(['view'=>$view,'total'=>$total]);
         }
+
     }
     public function thanhtoan(Request $request)
     {
