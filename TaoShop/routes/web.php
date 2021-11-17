@@ -25,7 +25,9 @@ Route::get('/trangchu/showcart',[ProductController::class,'showcart'])->name('sh
 Route::get('/trangchu/updatecart',[ProductController::class,'updatecart'])->name('updatecart');
 Route::get('/trangchu/deletecart',[ProductController::class,'deletecart'])->name('deletecart');
 Route::get('/trangchu/thanhtoan',[ProductController::class,'thanhtoan'])->name('thanhtoan');
-
+Route::get('/trangchu/search/{name}',[HomeController::class,'search'])->name('search');
+Route::get('/trangchu/menu_vip/{loai}/{hang}',[HomeController::class,'menu_vip'])->name('menu_vip');
+Route::get('/trangchu/category_menu/{id}',[HomeController::class,'category_menu'])->name('category_menu');
 Route::prefix('admin')->group(function () {
     Route::get('/','AdminController@dashboard')->name('admin.dashboard');
     Route::get('/category','CategoryController@index')->name('category.index');

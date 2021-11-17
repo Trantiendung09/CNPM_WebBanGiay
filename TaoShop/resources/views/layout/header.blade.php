@@ -112,7 +112,8 @@
             </div>
             <div class="col-sm-3">
                 <div class="search_box pull-right">
-                    <input type="text" placeholder="Search" />
+                    <input  class="search" type="text" placeholder="Search" value="" name="search"/>
+                    <!-- //data-url="{{route('search','d')}}" -->
                 </div>
             </div>
         </div>

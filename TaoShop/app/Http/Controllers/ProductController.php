@@ -20,8 +20,10 @@ class ProductController extends Controller
 {
     public function detail(Request $id)
     {
-        $sps = Product::where('id', $id->id)->first();
-        return view('layout.product_detail', compact('sps'));
+        $sps=Product::
+        where('id',$id->id)->first();
+        $category=Category::all();
+        return view('layout.product_detail',compact('sps','category'));
     }
     public function addToCart($id)
     {

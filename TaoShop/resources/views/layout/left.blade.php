@@ -15,9 +15,10 @@
 				</div>
 				<div id="{{$ca->id}}" class="panel-collapse collapse">
 					<div class="panel-body">
-						<ul>
+						<ul class="dmm">
 							<?php
-							$b = [""];
+
+						$b = [" "];
 							$k = 0;
 							?>
 							@foreach($ca->products as $p)
@@ -27,16 +28,17 @@
 								if ($b[$i] != $p->brand->name) {
 									$k = $k + 1;
 								}
-								
 							}
 							if ($k == $x) {
 								$b[$x] = $p->brand->name;
 							}
 							$k=0;
 							?>
+						
 							@endforeach
+							
 							@foreach($b as $c)
-							<li><a href="#">{{$c}}</a></li>
+							<li ><a class="menu" data-loai="{{$ca->id}}" data-hang="{{$c}}"  href="{{route('menu_vip',['loai'=>$ca->id, 'hang'=>$c])}}">{{$c}}</a></li>
 							@endforeach
 						</ul>
 					</div>
@@ -86,4 +88,5 @@
 		<!--/shipping-->
 
 	</div>
+	
 </div>

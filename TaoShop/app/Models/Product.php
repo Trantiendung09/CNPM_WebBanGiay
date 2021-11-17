@@ -59,4 +59,9 @@ class Product extends Model
     public function cart(){
         return $this->hasMany(Cart::class,'product_id','id');
     }
+    // public function scopeFullTextSearch($query, $columns, $term)
+    // {
+    //     $query->whereRaw("MATCH ({$columns}) AGAINST (? IN BOOLEAN MODE)", $this->fullTextWildcards($term));
+    //     return $query;
+    // }
 }
