@@ -51,43 +51,42 @@
             })
         }
 
-        function search(event) {
-            var keycode = (event.keyCode ? event.keyCode : event.which);
-            if (keycode == '13') {
-                let a = $('input.search').val();
-                var url = $('input.search').data('url');
-                //alert(a);
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    data: {
-                        name: a
-                    },
-                    success: function(data) {
-                        $('div.s').html(data.view);
-                        alert('d');
-                    },
-                    error: function() {}
-                })
-            }
-        }
-        function category_menu(event)
-        {
-            event.preventDefault();
-            url=$(this).data('url');
-            $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function(data) {
-                        $('div.menu_vip').html(data);
-                        // alert('dm');
-                    },
-                    error: function() {}
-                })
-        }
+        // function search(event) {
+        //     var keycode = (event.keyCode ? event.keyCode : event.which);
+        //     if (keycode == '13') {
+        //         let a = $('input.search').val();
+        //         var url = $('input.search').data('url');
+        //         //alert(a);
+        //         $.ajax({
+        //             type: "GET",
+        //             url: url,
+        //             data: {
+        //                 name: a
+        //             },
+        //             success: function(data) {
+        //                 $('div.s').html(data.view);
+        //             },
+        //             error: function() {}
+        //         })
+        //     }
+        // }
+        // function category_menu(event)
+        // {
+        //     event.preventDefault();
+        //     url=$(this).data('url');
+        //     $.ajax({
+        //             type: "GET",
+        //             url: url,
+        //             success: function(data) {
+        //                 $('div.menu_vip').html(data);
+        //                 // alert('dm');
+        //             },
+        //             error: function() {}
+        //         })
+        // }
         $(document).ready(function() {
             $('.add-to-cartt').on('click', addTocart);
-            $('input.search').keypress(search);
+            // $('input.search').keypress(search);
             $('a.category_menu').on('click', category_menu);
         })
         

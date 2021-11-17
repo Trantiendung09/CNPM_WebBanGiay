@@ -110,17 +110,15 @@
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') {
                 let a = $('input.search').val();
-                alert(a);
                 let url = "{{ route('search', ':id') }}";
                 url = url.replace(':id', a);
                 //var url = $('input.search').data('url');
-                alert(url);
                 $.ajax({
                     type: "GET",
                     url: url,
-                    success: function(data) {
+                    success: function(data){
                         $('div.features_items').html(data);
-                        alert('d');
+                        alert('done');
                     },
                     error: function() {}
                 })
