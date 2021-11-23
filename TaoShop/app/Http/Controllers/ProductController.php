@@ -23,7 +23,8 @@ class ProductController extends Controller
         $sps=Product::
         where('id',$id->id)->first();
         $category=Category::all();
-        return view('layout.product_detail',compact('sps','category'));
+        $list=Product::orderby('created_at','DESC')->where([['category_id',$sps->category_id],['id','!=',$id->id]])->paginate(6);
+        return view('layout.product_detail',compact('sps','category','list'));
     }
     public function addToCart($id)
     {
@@ -43,7 +44,7 @@ class ProductController extends Controller
             ];
         }
         session()->put('cart', $cart);
-        print_r(session('cart'));
+        return response()->json(['data'=>'Thêm sản phẩm thành công']);
     }
 
     public function showcart()

@@ -5,6 +5,7 @@
     </ol>
 </div>
 <div class="table-responsive cart_info" data-url="{{route('updatecart')}}" data-url2="{{route('deletecart')}}">
+    @if ($carts!=null)
     <table class="table table-condensed" style="width: 1160px;">
         <thead>
             <tr class="cart_menu">
@@ -26,7 +27,7 @@
             ?>
             <tr class="xoa_{{$id}}">
                 <td class="cart_product">
-                    <a href=""><img style="height: 80px; width: 80px;" src="{{asset('public/fontend/images/product-details')}}/{{$cart['image']}}" alt=""></a>
+                 <a href=""><img style="height: 80px; width: 80px;" src="{{asset('public/fontend/images/product-details')}}/{{$cart['image']}}" alt=""></a>
                 </td>
                 <td class="cart_description">
                     <h4><a href="">{{$cart['name']}}</a></h4>
@@ -52,7 +53,10 @@
                     <a title="xóa"  id="cart_delete" data-id='{{$id}}' href=""><i class="fa fa-times"></i></a>
                 </td>
             </tr>
-            @endforeach
+            @endforeach 
         </tbody>
-    </table>
+    </table> 
+    @else
+    <h1>Giỏ hàng của bạn đang trống!</h1>
+    @endif
 </div>
