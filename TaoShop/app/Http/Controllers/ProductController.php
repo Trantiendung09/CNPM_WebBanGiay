@@ -29,6 +29,8 @@ class ProductController extends Controller
     {
         // session()->forget('cart');
         $product = Product::find($id);
+        $anh=Photo::where('id',$product->photo_id)->first();
+        
         $cart = session('cart');
         if (isset($cart[$id])) {
             $cart[$id]['quantity'] = $cart[$id]['quantity'] + 1;
@@ -36,7 +38,8 @@ class ProductController extends Controller
             $cart[$id] = [
                 'name' => $product->name,
                 'price' => $product->price,
-                'quantity' => 1
+                'quantity' => 1,
+                'image'=> $anh->photo_n1
             ];
         }
         session()->put('cart', $cart);
@@ -51,8 +54,10 @@ class ProductController extends Controller
         {
             $total+=$sp['quantity']*$sp['price'];
         }
+        $category=Category::all();
+        
         // print_r(session('cart'));
-        return view('layout.Cart', compact('carts','total'));
+        return view('layout.Cart', compact('carts','total','category'));
     }
     public function updatecart(Request $request)
     {
@@ -101,7 +106,13 @@ class ProductController extends Controller
         $customer->adress=$request->adress;
         $customer->save();
         $order=new Order;
+        $total=0;
         $order->customer_id=$customer->id;
+        foreach($carts as $sp)
+        {
+            $total+=$sp['quantity']*$sp['price'];
+        }
+        $order->total=$total;
         $order->save();
         // dd($order->customer_id);
         foreach($carts as $cart)

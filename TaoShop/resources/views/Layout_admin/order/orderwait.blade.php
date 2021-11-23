@@ -146,7 +146,7 @@
                    $('#total').text(response.data.total); 
                    $('#id').text(response.data.id); 
                   //thêm data-url chứa route sửa todo đã được chỉ định vào form sửa.
-                  $('#form-edit').attr('data-url','{{ asset('admin/order/update') }}/'+response.data.id) 
+                  $('#form-edit').attr('data-url',"{{asset('admin/order/update')}}/"+response.data.id) 
                  },
                 error: function () {
                     alert("Chinh sua that bai");

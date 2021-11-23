@@ -40,7 +40,7 @@
                     {{-- <form method="POST" action="{{route('category.destroy',$item->id)}}">
                       @csrf @method('DELETE') --}}
                       <a href="{{route('order.show',$item->id)}}" class="btn btn-sm btn-primary btnedit" id="btnedit">
-                        <i class="fa fa-edit text-edit text">chấp nhận</i>
+                        <i class="fa fa-edit text-edit text">Chi tiết</i>
                       </a>
                     {{-- </form> --}}
                   </td>
@@ -105,10 +105,9 @@
             <div style="float: right">
                 <label for="">Thanh toán:</label>
                 <span id="total"></span>
-            </div>
+            </div>            
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="btnaccept">Accept</button>
-                <button type="button" class="btn btn-primary" id="btneditsave" style="">Accept&Emport</button>
+                <button type="button" class="btn btn-primary" id="btneditsave" style="">In hóa đơn</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnclose">Close</button>
             </div>
           </form>

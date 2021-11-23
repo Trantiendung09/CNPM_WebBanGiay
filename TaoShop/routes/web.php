@@ -28,6 +28,7 @@ Route::get('/trangchu/thanhtoan',[ProductController::class,'thanhtoan'])->name('
 Route::get('/trangchu/search/{name}',[HomeController::class,'search'])->name('search');
 Route::get('/trangchu/menu_vip/{loai}/{hang}',[HomeController::class,'menu_vip'])->name('menu_vip');
 Route::get('/trangchu/category_menu/{id}',[HomeController::class,'category_menu'])->name('category_menu');
+Route::get('/trangchu/category/{id}',[HomeController::class,'category'])->name('category');
 Route::prefix('admin')->group(function () {
     Route::get('/','AdminController@dashboard')->name('admin.dashboard');
     Route::get('/category','CategoryController@index')->name('category.index');
@@ -91,7 +92,11 @@ Route::post('/acount/store',[AcountController::class,'store'])->name('acount.sto
         Route::get('/order/edit/{id}','OrderController@edit')->name('order.edit');
         Route::get('/order/update/{id}','OrderController@update')->name('order.update');
         Route::get('/order/show/{id}','OrderController@show')->name('order.show');
+        Route::get('/thongke','ThongKeController@index')->name('thongke.index');
 
+        Route::get('/thongke/list','ThongKeController@list')->name('thongke.list');
+
+        Route::get('/thongke/graph','ThongKeController@graph')->name('thongke.graph');
         Route::resources([
         'Product' =>  'ProductController' ,
         'Customer' => 'CustomerController',
@@ -101,4 +106,5 @@ Route::post('/acount/store',[AcountController::class,'store'])->name('acount.sto
         'Category'=>'CategoryController'
         ]);  
     });
+
 // });

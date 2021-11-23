@@ -89,14 +89,17 @@
                 </div>
                 <div class="mainmenu pull-left">
                     <ul class="nav navbar-nav collapse navbar-collapse">
-                        <li><a href="{{route('home.index')}}" class="active">Home</a></li>
-                        <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                        <li><a href="{{route('home.index')}}" class="active">Trang Chủ</a></li>
+                        <li class="dropdown"><a href="#">Loại Sản Phẩm<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
-                                <li><a href="shop.html">Products</a></li>
+                            @foreach($category as $ca)
+                            <li><a href="{{route('category',['id'=>$ca->id])}}">{{$ca->name}}</a></li>
+                            @endforeach
+                                <!-- <li><a href="shop.html">Products</a></li>
                                 <li><a href="product-details.html">Product Details</a></li>
                                 <li><a href="checkout.html">Checkout</a></li>
                                 <li><a href="{{route('showcart')}}">Cart</a></li>
-                                <li><a href="login.html">Login</a></li>
+                                <li><a href="login.html">Login</a></li> -->
                             </ul>
                         </li>
                         <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>

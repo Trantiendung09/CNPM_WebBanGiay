@@ -13,9 +13,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $sp = Product::where('price', '>', '1000000')
-            ->where('quantity', '>', '30')
-            ->get();
+        $sp = Product::paginate(8);
+            // $sp = Product::where('price', '>', '1000000')
+            // ->where('quantity', '>', '30')
+            // ->paginate(5);
         $category = Category::all();
         return view('layout.home', compact('sp', 'category'));
     }
@@ -35,13 +36,23 @@ class HomeController extends Controller
     {
         $brand=Brand::where('name',$hang)->first();
         $sp=Product::where('category_id', $loai)
-        ->where('brand_id', $brand->id)->get();
+        ->where('brand_id', $brand->id)->paginate(4);
         $category = Category::all();
-        return view('layout.home', compact('sp', 'category'));
+        $loai=Category::where('id',$loai)->first();
+        return view('layout.category', compact('sp', 'category','loai', 'hang'));
     }
     public function category_menu($id)
     {
-        $sp=Product::where('category_id', $id)->get();
+        $sp=Product::where('category_id', $id)->paginate(8);
         return view('layout.menu_vip', compact('sp'));
     }
+    public function category($id)
+    {
+        $sp=Product::where('category_id', $id)->paginate(8);
+        $category = Category::all();
+        $ca=Category::where('id',$id)->first();
+        $name=$ca->name;
+        return view('layout.Product_Loai', compact('sp', 'category','name'));
+    }
+    
 }

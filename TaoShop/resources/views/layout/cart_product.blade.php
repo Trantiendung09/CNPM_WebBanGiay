@@ -26,7 +26,7 @@
             ?>
             <tr class="xoa_{{$id}}">
                 <td class="cart_product">
-                    <a href=""><img src="images/cart/three.png" alt=""></a>
+                    <a href=""><img style="height: 80px; width: 80px;" src="{{asset('public/fontend/images/product-details')}}/{{$cart['image']}}" alt=""></a>
                 </td>
                 <td class="cart_description">
                     <h4><a href="">{{$cart['name']}}</a></h4>

@@ -26,10 +26,10 @@ class OrderController extends Controller
             'titel'=>'Hóa đơn đang chờ xử lý'
         ],compact('model'));
     }
-    public function ordersuccsess(){
-        $model=Order::orderby('created_at','ASC')->where('status',0)->paginate(5);
-        return view('Layout_admin.order.orderwait',[
-            'titel'=>'Hóa đơn đang chờ xử lý'
+    public function success(){
+        $model=Order::orderby('created_at','ASC')->where('status',1)->paginate(5);
+        return view('Layout_admin.order.ordersuccess',[
+            'titel'=>'Hóa đơn xử lý thành công'
         ],compact('model'));
     }
 

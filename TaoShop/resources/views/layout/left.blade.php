@@ -1,6 +1,6 @@
 <div class="col-sm-3">
 	<div class="left-sidebar">
-		<h2>Category</h2>
+		<h2>Sản Phẩm Theo Hãng</h2>
 		<div class="panel-group category-products" id="accordian">
 			<!--category-productsr-->
 			@foreach($category as $ca)

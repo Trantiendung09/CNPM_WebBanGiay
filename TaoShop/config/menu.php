@@ -64,27 +64,44 @@
         'url'=>'admin.file',
         'icon'=>'fa-folder'
     ],
-    [
-        'label'=>'Đơn hàng',
-         'url'=>'order.index',
-         'icon'=>'fa-bars',
-         'items'=>[
-             [
-                'label'=>'Đơn chờ xử lý',
-                'url'=>'order.wait',
-                'icon'=>'fa-wait'
-             ],
-             [
-                'label'=>'Đơn hoàn thành',
-                'url'=>'order.success',
-                'icon'=>'fa-success'
-             ],
-            [
-                'label'=>'Đơn hàng đang xử lý ',
-                'url'=>'order.doing',
-                'icon'=>'fa-load'
+        [
+            'label'=>'Đơn hàng',
+             'url'=>'order.index',
+             'icon'=>'fa-bars',
+             'items'=>[
+                 [
+                    'label'=>'Đơn chờ xử lý',
+                    'url'=>'order.wait',
+                    'icon'=>'fa-wait'
+                 ],
+                 [
+                    'label'=>'Đơn hoàn thành',
+                    'url'=>'order.success',
+                    'icon'=>'fa-success'
+                 ],
+                [
+                    'label'=>'Đơn hàng đang xử lý ',
+                    'url'=>'order.doing',
+                    'icon'=>'fa-load'
+                ],
+             ]
             ],
-         ]
+        [
+            'label'=>'Thống kê',
+            'url'=>'thongke.index',
+            'icon'=>'order.graphy',
+            'items'=>[
+                [
+                'label'=>'Thống kê',
+                'url'=>'thongke.list',
+                'icon'=>''
+                ],
+                [
+                    'label'=>'Đồ thị tăng trưởng',
+                    'url'=>'thongke.graph',
+                    'icon'=>''
+                ]
+            ],
+        ]
     ]
-   ]
 ?>
