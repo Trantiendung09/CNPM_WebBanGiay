@@ -92,11 +92,12 @@ Route::post('/acount/store',[AcountController::class,'store'])->name('acount.sto
         Route::get('/order/edit/{id}','OrderController@edit')->name('order.edit');
         Route::get('/order/update/{id}','OrderController@update')->name('order.update');
         Route::get('/order/show/{id}','OrderController@show')->name('order.show');
-        Route::get('/thongke','ThongKeController@index')->name('thongke.index');
+        Route::get('/thongke','ThongKeController@totalproduct')->name('thongke.index');
 
         Route::get('/thongke/list','ThongKeController@list')->name('thongke.list');
 
         Route::get('/thongke/graph','ThongKeController@graph')->name('thongke.graph');
+        Route::get('/lockq','ThongKeController@thongkeloc')->name('thongke.loc');
         Route::resources([
         'Product' =>  'ProductController' ,
         'Customer' => 'CustomerController',
