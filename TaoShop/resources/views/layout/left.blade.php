@@ -18,13 +18,13 @@
 						<ul class="dmm">
 							<?php
 
-						$b = [" "];
+							$b = [" "];
 							$k = 0;
 							?>
 							@foreach($ca->products as $p)
 							<?php
-							$x=count($b);
-							for ($i = 0; $i <= $x-1; $i++) {
+							$x = count($b);
+							for ($i = 0; $i <= $x - 1; $i++) {
 								if ($b[$i] != $p->brand->name) {
 									$k = $k + 1;
 								}
@@ -32,19 +32,16 @@
 							if ($k == $x) {
 								$b[$x] = $p->brand->name;
 							}
-							$k=0;
+							$k = 0;
 							?>
-						
 							@endforeach
-							
 							@foreach($b as $c)
-							<li ><a class="menu" data-loai="{{$ca->id}}" data-hang="{{$c}}"  href="{{route('menu_vip',['loai'=>$ca->id, 'hang'=>$c])}}">{{$c}}</a></li>
+							<li><a class="menu" data-loai="{{$ca->id}}" data-hang="{{$c}}" href="{{route('menu_vip',['loai'=>$ca->id, 'hang'=>$c])}}">{{$c}}</a></li>
 							@endforeach
 						</ul>
 					</div>
 				</div>
 			</div>
-
 			@endforeach
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -56,31 +53,39 @@
 
 		<div class="brands_products">
 			<!--brands_products-->
-			<h2>Brands</h2>
+			<h2>Thương Hiệu</h2>
 			<div class="brands-name">
 				<ul class="nav nav-pills nav-stacked">
-					<li><a href="#"> <span class="pull-right">(50)</span>Acne</a></li>
-					<li><a href="#"> <span class="pull-right">(56)</span>Grüne Erde</a></li>
-					<li><a href="#"> <span class="pull-right">(27)</span>Albiro</a></li>
-					<li><a href="#"> <span class="pull-right">(32)</span>Ronhill</a></li>
-					<li><a href="#"> <span class="pull-right">(5)</span>Oddmolly</a></li>
-					<li><a href="#"> <span class="pull-right">(9)</span>Boudestijn</a></li>
-					<li><a href="#"> <span class="pull-right">(4)</span>Rösch creative culture</a></li>
+					@foreach($brands as $brand)
+					<li><a href="#"> <span class="pull-right">({{$brandss[$brand->id]}})</span>{{$brand->name}}</a></li>
+					@endforeach
 				</ul>
 			</div>
 		</div>
 		<!--/brands_products-->
 
-		<div class="price-range">
-			<!--price-range-->
-			<h2>Price Range</h2>
+		<!-- <div class="price-range"> -->
+		<!--price-range-->
+		<!-- <h2>Price Range</h2>
 			<div class="well text-center">
 				<input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
 				<b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
 			</div>
+		</div> -->
+		<div>
+			<h2>Lọc theo giá </h2>
+			<form action="{{route('locgia')}}" method="get">
+			@csrf
+				<div id="slider-range" style="height:20px;"></div>
+				<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+				<input type="hidden" name="price_start" id="price_start">
+				<input type="hidden" name="price_end" id="price_end" >
+				<br>
+				<input type="submit" name="filter-price" value="lọc giá" class="btn btn-sm btn-default">
+			</form>
+			<!--/price-range-->
 		</div>
-		<!--/price-range-->
-
+		<br>
 		<div class="shipping text-center">
 			<!--shipping-->
 			<img src="{{('public/fontend/images/home/shipping.jpg')}}" alt="" />
@@ -88,5 +93,5 @@
 		<!--/shipping-->
 
 	</div>
-	
+
 </div>

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<title>Home | Táo Store</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <title>Home | Táo Store</title>
 	<link href="{{asset('public/fontend/css/bootstrap.min.css')}}" rel="stylesheet">
 	<link href="{{asset('public/fontend/css/font-awesome.min.css')}}" rel="stylesheet">
 	<link href="{{asset('public/fontend/css/prettyPhoto.css')}}" rel="stylesheet">
@@ -14,7 +13,6 @@
 	<link href="{{asset('public/fontend/css/animate.css')}}" rel="stylesheet">
 	<link href="{{asset('public/fontend/css/main.css')}}" rel="stylesheet">
 	<link href="{{asset('public/fontend/css/responsive.css')}}" rel="stylesheet">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 	<!--[if lt IE 9]>
 	<script src="js/html5shiv.js"></script>
 	<script src="js/respond.min.js"></script>
@@ -25,30 +23,41 @@
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 </head>
-<!--/head-->
-
 <body>
 	<header id="header">
 		<!--header-->
-		@include('layout/header')
+		<!-- @include('layout/header') -->
 	</header>
 	<!--/header-->
 	{{-- section top --}}
-	@include('layout/siledertop')
+
+
 	<section>
-		<div class="container">
-			<div class="row">
-				<div>
-					@include('layout.left')
-				</div>
-				<div class="col-sm-9 padding-right">
-					@yield('content')
-				</div>
-			</div>
+		<div class="container" id="muahang">
+			@yield('content')
 		</div>
 	</section>
 	<footer id="footer">
+		<!--Footer-->
 		@include('layout/footer')
 	</footer>
+	<!--/Footer-->
+
+	<script src="{{asset('public/fontend/js/jquery.js')}}"></script>
+	<script src="{{asset('public/fontend/js/bootstrap.min.js')}}"></script>
+	<script src="{{asset('public/fontend/js/jquery.scrollUp.min.js')}}"></script>
+	<script src="{{asset('public/fontend/js/price-range.js')}}"></script>
+	<script src="{{asset('public/fontend/js/jquery.prettyPhoto.js')}}"></script>
+	<script src="{{asset('public/fontend/js/main.js')}}"></script>
+	<!-- <script>
+    function addTocart(event) {
+        event.preventDefault();
+        var url=$('.add-to-cart').data('url');
+        alert(url);
+    }
+    $(function () {
+        $('.add-to-cart').on('click', addTocart);
+    })
+</script> -->
 </body>
 </html>

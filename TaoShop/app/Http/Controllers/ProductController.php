@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\product\storeRequest;
+use App\Http\Requests\C;
+use App\Models\Cart;
 use App\Models\Photo;
 use Illuminate\Support\Facades\View;
 
@@ -23,8 +25,17 @@ class ProductController extends Controller
         $sps=Product::
         where('id',$id->id)->first();
         $category=Category::all();
-        $list=Product::orderby('created_at','DESC')->where([['category_id',$sps->category_id],['id','!=',$id->id]])->paginate(6);
-        return view('layout.product_detail',compact('sps','category','list'));
+        $list=Product::orderby('created_at','DESC')
+        ->where([['category_id',$sps->category_id],['id','!=',$id->id]])
+        ->paginate(6);
+        $brands=Brand::all();
+        $brandss=[];
+        foreach($brands as $brand)
+        {
+            $brandsss=Product::where('brand_id',$brand->id)->count();
+            $brandss[''.$brand->id]=''. $brandsss;
+        }
+        return view('layout.product_detail',compact('sps','category','list','brands','brandss'));
     }
     public function addToCart($id)
     {
@@ -49,6 +60,9 @@ class ProductController extends Controller
 
     public function showcart()
     {
+        if (!session()->has('cart')) {
+            return redirect()->route('home.index');
+        }
         $carts = session('cart');
         $total=0;
         foreach($carts as $sp)
@@ -95,8 +109,11 @@ class ProductController extends Controller
         }
 
     }
-    public function thanhtoan(Request $request)
+    public function thanhtoan(C $request)
     {
+        if (!session()->has('cart')) {
+            return redirect()->route('home.index');
+        }
         $request->validate(['name'=>'required']);
         $carts = session('cart');
         $customer=new Customer;
@@ -125,7 +142,12 @@ class ProductController extends Controller
             $order_detail->save();
         }
         $s= $customer->id;
-        return response()->json((['s'=>$s]));
+        $category=Category::all();
+        // return redirect()->route('home.index');
+        // return response()->json((['s'=>$s]));
+        $cart_done=$carts;
+        session()->forget('cart');
+        return view('layout.cart_done',compact('total','customer','category','cart_done'));
     }
     /**
      * Display a listing of the resource.

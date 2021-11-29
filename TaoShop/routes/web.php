@@ -29,6 +29,7 @@ Route::get('/trangchu/search/{name}',[HomeController::class,'search'])->name('se
 Route::get('/trangchu/menu_vip/{loai}/{hang}',[HomeController::class,'menu_vip'])->name('menu_vip');
 Route::get('/trangchu/category_menu/{id}',[HomeController::class,'category_menu'])->name('category_menu');
 Route::get('/trangchu/category/{id}',[HomeController::class,'category'])->name('category');
+Route::get('/trangchu/locgia',[HomeController::class,'locgia'])->name('locgia');
 Route::prefix('admin')->group(function () {
     Route::get('/','AdminController@dashboard')->name('admin.dashboard');
     Route::get('/category','CategoryController@index')->name('category.index');

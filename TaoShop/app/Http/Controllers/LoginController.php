@@ -47,7 +47,7 @@ class LoginController extends Controller
     return back()->with('error','Email không tồn tại!');
     }
     public function logout(){
-        Session()->flush();
+        session()->forget('acount_name');
         dd(session('acount_name'));
         return redirect()->route('login');
     }

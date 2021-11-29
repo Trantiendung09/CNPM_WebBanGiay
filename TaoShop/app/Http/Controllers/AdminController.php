@@ -12,13 +12,17 @@ class AdminController extends Controller
    
    public  function check()
    {
-      if(session('acount_name')==null)
-      {
-          return  redirect()->route('login');
-      }
      
+      if (!session()->has('acount_name')) {
+
+         return redirect()->route('login');
+      }
   }
    public  function dashboard(){
+      if (!session()->has('acount_name')) {
+
+         return redirect()->route('login');
+      }
       $products=Acount::select(DB::raw("COUNT(*) as count"))
       ->whereYear('created_at',date('Y'))
       ->groupBy(DB::raw("Month(created_at)"))
