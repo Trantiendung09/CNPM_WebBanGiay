@@ -53,9 +53,12 @@
 	</div>
 	
 	<div class="text-center p-t-46 p-b-20">
+		<a href="{{route('acount.create')}}">
 		<span class="txt2">
 			or sign up using
 		</span>
+		</a>
+		
 	</div>
 
 	<div class="login100-form-social flex-c-m">

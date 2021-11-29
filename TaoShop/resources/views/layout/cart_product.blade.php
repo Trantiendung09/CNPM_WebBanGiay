@@ -9,11 +9,11 @@
     <table class="table table-condensed" style="width: 1160px;">
         <thead>
             <tr class="cart_menu">
-                <td class="image">Item</td>
-                <td class="description"></td>
-                <td class="price">Price</td>
-                <td class="quantity">Quantity</td>
-                <td class="totall">Total</td>
+                <td class="image">Sản Phẩm</td>
+                <td class="description"> Mô tả</td>
+                <td class="price">Giá</td>
+                <td class="quantity">Số Lượng</td>
+                <td class="totall">Tổng Giá</td>
                 <td></td>
             </tr>
         </thead>
@@ -30,7 +30,8 @@
                  <a href=""><img style="height: 80px; width: 80px;" src="{{asset('public/fontend/images/product-details')}}/{{$cart['image']}}" alt=""></a>
                 </td>
                 <td class="cart_description">
-                    <h4><a href="">{{$cart['name']}}</a></h4>
+                    <p><a href="" style="    color: #696763;
+    font-size: 18px;">{{$cart['name']}}</a></p>
                     <p>Web ID: {{$id}}</p>
                 </td>
                 <td class="cart_price">
@@ -44,7 +45,8 @@
                     </div>
                 </td>
                 <td class="cart_total">
-                    <p class="cart_total_price {{$id}}">{{$cart['quantity']*$cart['price']}}</p>
+                    <p style="    color: #696763;
+    font-size: 18px;" class="cart_total_price {{$id}}">{{$cart['quantity']*$cart['price']}}</p>
                 </td>
                 <td>
                     <a title="cập nhật" style="margin-right: 20px;" id="cart_update" data-id='{{$id}}' data-price="{{$cart['price']}}" href=""><i class="fa fa-refresh"></i></a>

@@ -1,5 +1,13 @@
 <div>
-<h2 class="title text-center">search result</h2>
+<p class="title text-center" style="color: #FE980F;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 auto 30px;
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 3;">Kết quả tìm kiếm</p>	
     @foreach($sp as $s)
     <div class="col-sm-4" style="width: 200px; height:100%">
         <div class="product-image-wrapper">

@@ -33,7 +33,7 @@
 
 
 	<section>
-		<div class="container">
+		<div class="container" id="muahang">
 			@yield('content')
 		</div>
 	</section>

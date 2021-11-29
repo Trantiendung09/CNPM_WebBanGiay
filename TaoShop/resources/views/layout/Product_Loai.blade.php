@@ -2,7 +2,15 @@
 @section('content')
 <div class="features_items">
     <!--features_items-->
-    <h2 class="title text-center">{{$name}}</h2>
+    <p class="title text-center" style="color: #FE980F;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 auto 30px;
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 3; margin-top:0px">{{$name}}</p>
     <div class="s">
         @foreach($sp as $s)
         <div class="col-sm-4" style="width: 200px; height:100%">
@@ -92,6 +100,7 @@
     <script src="{{asset('public/fontend/js/price-range.js')}}"></script>
     <script src="{{asset('public/fontend/js/jquery.prettyPhoto.js')}}"></script>
     <script src="{{asset('public/fontend/js/main.js')}}"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
         function addTocart(event) {
             alert('da them san pham vao gio hang');
@@ -125,6 +134,23 @@
                 })
             }
         }
+        $(document).ready(function() {
+        $("#slider-range").slider({
+            orientation: "horizontal",
+            range: true,
+            step:100000,
+            min: 100000,
+            max: 3000000,
+            values: [500000, 1000000],
+            slide: function(event, ui) {
+                $("#amount").val(ui.values[0]+"vnđ"  + " - " + ui.values[1]+"vnđ");
+                $("#price_start").val(ui.values[0]);
+                $("#price_end").val(ui.values[1]);
+            }
+        });
+        $("#amount").val($("#slider-range").slider("values", 0) +"vnđ"+
+            " - " + $("#slider-range").slider("values", 1)+"vnđ");
+    })
         function category_menu(event)
         {
             event.preventDefault();

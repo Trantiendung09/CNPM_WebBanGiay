@@ -1,7 +1,8 @@
 @extends('welcome')
 @section('content')
 <div class="features_items">
-<p class="title text-center" style=" color: #FE980F;
+    <!--features_items-->
+    <p class="title text-center" style="color: #FE980F;
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     font-weight: 700;
@@ -9,9 +10,7 @@
     text-align: center;
     text-transform: uppercase;
     position: relative;
-    z-index: 3; margin-top:0px">{{$loai->name}} của hãng {{$hang}}</p>	 -->
-    
-    <!-- <h2 class="title text-center" >{{$loai->name}} <span>của hãng</span> {{$hang}}</h2> -->
+    z-index: 3; margin-top:0px">Kết quả lọc theo giá</p>	
     <div class="s">
         @foreach($sp as $s)
         <div class="col-sm-4" style="width: 200px; height:100%">
@@ -40,20 +39,19 @@
                     </ul>
                 </div>
             </div>
-
         </div>
         @endforeach
     </div>
-    <hr>
-{{$sp->links()}}
 </div>
+{{$sp->appends(request()->all())->links()}}
+<hr>
 <!--features_items-->
 <div class="category-tab">
     <!--category-tab-->
     <div class="col-sm-12">
         <ul class="nav nav-tabs">
             @foreach($category as $ca)
-            <li><a href="#" class="category_menu" data-url="{{route('category_menu',['id'=>$ca->id])}}" >{{$ca->name}}</a></li>
+            <li><a href="#" class="category_menu" data-url="{{route('category_menu',['id'=>$ca->id])}}">{{$ca->name}}</a></li>
             @endforeach
         </ul>
     </div>
@@ -62,14 +60,14 @@
             <div class="col-sm-4">
                 <div class="product-image-wrapper">
                     <div id="menu">
-                    <div class="single-products">
-                        <div class="productinfo text-center">
-                            <img src="images/home/gallery1.jpg" alt="" />
-                            <h2>$56</h2>
-                            <p>Easy Polo Black Edition</p>
-                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        <div class="single-products">
+                            <div class="productinfo text-center">
+                                <img src="images/home/gallery1.jpg" alt="" />
+                                <h2>$56</h2>
+                                <p>Easy Polo Black Edition</p>
+                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -92,17 +90,69 @@
         </div>
     </div>
 </div>
-
 <!--/category-tab-->
 <script src="{{asset('public/fontend/js/jquery.js')}}"></script>
-    <script src="{{asset('public/fontend/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('public/fontend/js/jquery.scrollUp.min.js')}}"></script>
-    <script src="{{asset('public/fontend/js/price-range.js')}}"></script>
-    <script src="{{asset('public/fontend/js/jquery.prettyPhoto.js')}}"></script>
-    <script src="{{asset('public/fontend/js/main.js')}}"></script>
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-    <script>
-            $(document).ready(function() {
+<script src="{{asset('public/fontend/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('public/fontend/js/jquery.scrollUp.min.js')}}"></script>
+<script src="{{asset('public/fontend/js/price-range.js')}}"></script>
+<script src="{{asset('public/fontend/js/jquery.prettyPhoto.js')}}"></script>
+<script src="{{asset('public/fontend/js/main.js')}}"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<script>
+    function addTocart(event) {
+        alert('da them san pham vao gio hang');
+        event.preventDefault();
+        var urlCart = $(this).data('url');
+        $.ajax({
+            type: "GET",
+            url: urlCart,
+            dataType: 'json',
+            success: function(data) {},
+            error: function() {
+
+            }
+        })
+    }
+
+    function search(event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            let a = $('input.search').val();
+            let url = "{{ route('search', ':id') }}";
+            url = url.replace(':id', a);
+            //var url = $('input.search').data('url');
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function(data) {
+                    $('div.features_items').html(data);
+                    alert('done');
+                },
+                error: function() {}
+            })
+        }
+    }
+
+    function category_menu(event) {
+        event.preventDefault();
+        url = $(this).data('url');
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function(data) {
+                $('div.menu_vip').html(data);
+                // alert('dm');
+            },
+            error: function() {}
+        })
+    }
+    $(document).ready(function() {
+        $('a.add-to-cart').on('click', addTocart);
+        $('input.search').keypress(search);
+        $('a.category_menu').on('click', category_menu);
+        $()
+    })
+    $(document).ready(function() {
         $("#slider-range").slider({
             orientation: "horizontal",
             range: true,
@@ -119,59 +169,7 @@
         $("#amount").val($("#slider-range").slider("values", 0) +"vnđ"+
             " - " + $("#slider-range").slider("values", 1)+"vnđ");
     })
-        function addTocart(event) {
-            alert('da them san pham vao gio hang');
-            event.preventDefault();
-            var urlCart = $(this).data('url');
-            $.ajax({
-                type: "GET",
-                url: urlCart,
-                dataType: 'json',
-                success: function(data) {},
-                error: function() {
-
-                }
-            })
-        }
-        function search(event) {
-            var keycode = (event.keyCode ? event.keyCode : event.which);
-            if (keycode == '13') {
-                let a = $('input.search').val();
-                let url = "{{ route('search', ':id') }}";
-                url = url.replace(':id', a);
-                //var url = $('input.search').data('url');
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function(data){
-                        $('div.features_items').html(data);
-                        alert('done');
-                    },
-                    error: function() {}
-                })
-            }
-        }
-        function category_menu(event)
-        {
-            event.preventDefault();
-            url=$(this).data('url');
-            $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function(data) {
-                        $('div.menu_vip').html(data);
-                        // alert('dm');
-                    },
-                    error: function() {}
-                })
-        }
-        $(document).ready(function() {
-            $('a.add-to-cart').on('click', addTocart);
-            $('input.search').keypress(search);
-            $('a.category_menu').on('click', category_menu);
-        })
-        
-    </script>
+</script>
 
 <!--/recommended_items-->
 @endsection

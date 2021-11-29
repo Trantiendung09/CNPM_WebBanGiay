@@ -32,7 +32,7 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 	        @yield('content')
-			<div class="login100-more" style="background-image: url('{{asset('public/assetlogin/images/1.jpg')}});" >
+			<!-- //<div class="login100-more" style="background-image: url('{{asset('public/assetlogin/images/1.jpg')}});" > -->
 			</div>
 		</div>
 	</div>	
